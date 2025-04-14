@@ -13,6 +13,8 @@ void sequence(int index, vector<int> &ar, vector<int> &temp)
         cout << endl;
         return;
     }
+    // time complexity is near about 2^n + n for the printing
+
     temp.push_back(ar[index]);
     sequence(index + 1, ar, temp);
     temp.pop_back();
@@ -21,7 +23,7 @@ void sequence(int index, vector<int> &ar, vector<int> &temp)
 int main()
 {
     vector<int> ar = {3, 1, 2};
-    int index = 0;
+
     vector<int> temp;
-    sequence(index, ar, temp);
+    sequence(0, ar, temp);
 }
