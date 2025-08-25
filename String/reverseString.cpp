@@ -19,13 +19,14 @@ public:
             else if (ch == ' ' && temp != "")
             {
                 if (ans != "")
-                    ans = temp + " " + ans;
+                    ans = temp + " " + ans; // in c++ + operator return new string you have to store it for further use;
                 else
                     ans = temp;
                 temp = "";
             }
             left++;
         }
+
         if (temp != "")
         {
             if (ans != "")
