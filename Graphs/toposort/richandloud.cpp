@@ -4,18 +4,19 @@ public:
     int dfs(int u, vector<vector<int>> &graph, vector<int> &quiet, vector<int> &answer)
     {
         if (answer[u] != -1)
-            return answer[u]; // memoization: already computed
+            return answer[u]; // already computed
 
-        answer[u] = u; // base: person themselves
+        int minPerson = u; // start with the person themselves
         for (int v : graph[u])
         {
-            int cand = dfs(v, graph, quiet, answer); // go to richer neighbor
-            if (quiet[cand] < quiet[answer[u]])
+            int cand = dfs(v, graph, quiet, answer); // recurse to richer neighbor
+            if (quiet[cand] < quiet[minPerson])
             {
-                answer[u] = cand;
+                minPerson = cand;
             }
         }
 
+        answer[u] = minPerson; // store only the final quietest person
         return answer[u];
     }
 
