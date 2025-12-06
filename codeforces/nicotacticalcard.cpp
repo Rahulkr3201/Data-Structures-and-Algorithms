@@ -3,35 +3,44 @@ using namespace std;
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int t;
     cin >> t;
+
     while (t--)
     {
         int n;
         cin >> n;
-        vector<long long> a(n);
-        vector<long long> b(n);
+
+        vector<long long> a(n), b(n);
+        for (auto &x : a)
+            cin >> x;
+        for (auto &x : b)
+            cin >> x;
+
+        long long mini = 0, maxi = 0; // initial score range = [0,0]
+
         for (int i = 0; i < n; i++)
         {
-            cin >> a[i];
-        }
-        for (int i = 0; i < n; i++)
-        {
-            cin >> b[i];
-        }
-        long long k = 0;
-        long long maxi = max(k - a[0], b[0] - k);
-        long long mini = min(k - a[0], b[0] - k);
 
-        for (int i = 1; i < n; i++)
-        {
+            // 4 possible transitions
+            long long t1 = mini - a[i]; // from mini using red
+            long long t2 = maxi - a[i]; // from maxi using red
+            long long t3 = b[i] - mini; // from mini using blue
+            long long t4 = b[i] - maxi; // from maxi using blue
 
-            long long new_maxi = max(b[i] - mini, maxi - a[i]);
-            long long new_mini = min(mini - a[i], b[i] - maxi);
+            // new interval from min/max of these 4
+            long long new_mini = min({t1, t2, t3, t4});
+            long long new_maxi = max({t1, t2, t3, t4});
 
-            maxi = new_maxi;
             mini = new_mini;
+            maxi = new_maxi;
         }
-        cout << maxi << endl;
+
+        cout << maxi << "\n"; // answer = maximum reachable score
     }
+
+    return 0;
 }
