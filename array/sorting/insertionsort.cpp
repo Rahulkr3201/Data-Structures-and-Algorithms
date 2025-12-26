@@ -1,23 +1,16 @@
-#include <bits/stdc++.h>
+#include <algorithm>
 using namespace std;
 
 void insertion_sort(int arr[], int n)
 {
-    // Start from second element → treat first as sorted
     for (int i = 1; i < n; i++)
     {
-        int key = arr[i]; // element to insert
-        int j = i - 1;
-
-        // Shift all elements greater than key one position right
-        while (j >= 0 && arr[j] > key)
+        int j = i;
+        while (j > 0 && arr[j - 1] > arr[j])
         {
-            arr[j + 1] = arr[j];
+            swap(arr[j - 1], arr[j]);
             j--;
         }
-
-        // Place key at its correct position
-        arr[j + 1] = key;
     }
 }
 
