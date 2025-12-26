@@ -29,8 +29,8 @@ public:
             int wt = edge[2];
             if (dist[u] != 1e8 && dist[u] + wt < dist[v])
             {
-                return {-1}; // Negative cycle detected
-            }
+                return {-1}; // Negative cycle detected, even after removing till n-1 step we are getting it removed for nth means we are stuck in loop.
+                        }
         }
 
         return dist;
