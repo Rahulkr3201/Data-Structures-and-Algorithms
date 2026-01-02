@@ -1,58 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void merge(vector<int> &arr, int left, int mid, int right)
-{
-    vector<int> temp;
-    int i = left;
-    int j = mid + 1;
+class Solution {
+public:
+    // Function to merge two halves of the array
+    void merge(vector<int>& arr, int low, int mid, int high) {
+        // Create temp arrays
+        vector<int> temp;
+        int left = low;
+        int right = mid + 1;
 
-    // Merge two sorted halves
-    while (i <= mid && j <= right)
-    {
-        if (arr[i] <= arr[j])
-            temp.push_back(arr[i++]);
-        else
-            temp.push_back(arr[j++]);
+        // Merge two sorted halves
+        while (left <= mid && right <= high) {
+            if (arr[left] <= arr[right])
+                temp.push_back(arr[left++]);
+            else
+                temp.push_back(arr[right++]);
+        }
+
+        // Copy remaining elements from left half
+        while (left <= mid)
+            temp.push_back(arr[left++]);
+
+        // Copy remaining elements from right half
+        while (right <= high)
+            temp.push_back(arr[right++]);
+
+        // Copy sorted elements back to original array
+        for (int i = low; i <= high; i++)
+            arr[i] = temp[i - low];
     }
 
-    // Copy remaining elements
-    while (i <= mid)
-        temp.push_back(arr[i++]);
-    while (j <= right)
-        temp.push_back(arr[j++]);
+    // Recursive merge sort function
+    void mergeSort(vector<int>& arr, int low, int high) {
+        if (low >= high)
+            return;
 
-    // Copy back into original array
-    for (int k = left; k <= right; k++)
-        arr[k] = temp[k - left];
-}
+        // Find the middle index
+        int mid = (low + high) / 2;
 
-void mergeSort(vector<int> &arr, int left, int right)
-{
-    if (left >= right)
-        return;
+        // Recursively sort left half
+        mergeSort(arr, low, mid);
 
-    int mid = left + (right - left) / 2;
+        // Recursively sort right half
+        mergeSort(arr, mid + 1, high);
 
-    // Sort left half
-    mergeSort(arr, left, mid);
+        // Merge the two sorted halves
+        merge(arr, low, mid, high);
+    }
+};
 
-    // Sort right half
-    mergeSort(arr, mid + 1, right);
-
-    // Merge both halves
-    merge(arr, left, mid, right);
-}
-
-int main()
-{
-    vector<int> arr = {5, 2, 3, 1, 4};
-    mergeSort(arr, 0, arr.size() - 1);
-
-    cout << "Sorted array: ";
-    for (int num : arr)
-        cout << num << " ";
+int main() {
+    vector<int> arr = {5, 2, 8, 4, 1};
+    Solution sol;
+    sol.mergeSort(arr, 0, arr.size() - 1);
+    for (int x : arr)
+        cout << x << " ";
     cout << endl;
-
     return 0;
 }
